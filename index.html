@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoCoin 🌱</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Noto Sans KR", sans-serif;
+      background: linear-gradient(to bottom, #e8f5e9, #c8e6c9);
+      color: #2e7d32;
+      text-align: center;
+    }
+
+    header {
+      background-color: #a5d6a7;
+      padding: 20px;
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #1b5e20;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    main {
+      padding: 30px 15px;
+    }
+
+    section {
+      background: white;
+      border-radius: 15px;
+      margin: 25px auto;
+      padding: 25px;
+      width: 90%;
+      max-width: 650px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #388e3c;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #81c784;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 20px;
+      margin: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #66bb6a;
+      transform: scale(1.05);
+    }
+
+    .coin {
+      font-size: 1.1em;
+      margin-top: 10px;
+      color: #1b5e20;
+      font-weight: bold;
+    }
+
+    .tree-area {
+      margin-top: 20px;
+    }
+
+    .tree {
+      font-size: 2.5em;
+      display: inline-block;
+      margin: 6px;
+      animation: grow 1s ease;
+    }
+
+    @keyframes grow {
+      from { transform: scale(0.2); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .ranking-list {
+      text-align: left;
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.8;
+      color: #2e7d32;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 10px;
+      font-size: 0.9em;
+      color: #4caf50;
+    }
+
+    .leaf-bg {
+      background-image: url('https://cdn.pixabay.com/photo/2016/04/20/18/58/leaves-1347462_1280.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.1;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="leaf-bg"></div>
+
+  <header>🌿 EcoCoin – 지구를 위한 작은 실천 🌏</header>
+
+  <main>
+    <section id="mission">
+      <h2>오늘의 친환경 미션</h2>
+      <p>아래 실천을 완료하면 EcoCoin을 얻을 수 있어요!</p>
+      <button onclick="completeMission('텀블러 사용')">☕ 텀블러 사용</button>
+      <button onclick="completeMission('대중교통 이용')">🚌 대중교통 이용</button>
+      <button onclick="completeMission('분리수거 실천')">♻️ 분리수거 실천</button>
+      <div class="coin" id="coinCount">보유 EcoCoin: 0</div>
+    </section>
+
+    <section id="tree">
+      <h2>🌳 나무 심기</h2>
+      <p>EcoCoin 10개로 나무 한 그루를 심을 수 있어요.</p>
+      <button onclick="plantTree()">나무 심기 🌲</button>
+      <div class="tree-area" id="treeArea"></div>
+    </section>
+
+    <section id="donate">
+      <h2>💚 환경단체 기부</h2>
+      <p>EcoCoin 5개로 환경단체에 기부할 수 있어요.</p>
+      <button onclick="donate()">기부하기 💸</button>
+      <p id="donationMsg"></p>
+    </section>
+
+    <section id="ranking">
+      <h2>🏆 EcoCoin 랭킹</h2>
+      <div class="ranking-list">
+        <p>1위: 하늘이 (EcoCoin 120)</p>
+        <p>2위: 민지 (EcoCoin 85)</p>
+        <p>3위: 지훈 (EcoCoin 60)</p>
+        <p>4위: 나 (EcoCoin <span id="userCoinRank">0</span>)</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 EcoCoin Project | Save the Earth 🌍</footer>
+
+  <script>
+    let coins = 0;
+
+    function completeMission(name) {
+      coins += 3;
+      document.getElementById('coinCount').innerText = `보유 EcoCoin: ${coins}`;
+      document.getElementById('userCoinRank').innerText = coins;
+      alert(`✅ '${name}' 미션 완료! +3 EcoCoin 획득`);
+    }
+
+    function plantTree() {
+      if (coins >= 10) {
+        coins -= 10;
+        const treeArea = document.getElementById('treeArea');
+        const tree = document.createElement('span');
+        tree.classList.add('tree');
+        tree.innerHTML = '🌳';
+        treeArea.appendChild(tree);
+        document.getElementById('coinCount').innerText = `보유 EcoCoin: ${coins}`;
+        document.getElementById('userCoinRank').innerText = coins;
+        alert("🌱 나무 한 그루를 심었습니다!");
+      } else {
+        alert("EcoCoin이 부족합니다 (10개 필요)");
+      }
+    }
+
+    function donate() {
+      if (coins >= 5) {
+        coins -= 5;
+        document.getElementById('donationMsg').innerText = "💚 환경단체에 기부 완료! 지구가 미소 짓고 있어요.";
+        document.getElementById('coinCount').innerText = `보유 EcoCoin: ${coins}`;
+        document.getElementById('userCoinRank').innerText = coins;
+      } else {
+        alert("EcoCoin이 부족합니다 (5개 필요)");
+      }
+    }
+  </script>
+</body>
+</html>
